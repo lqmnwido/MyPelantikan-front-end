@@ -1,0 +1,14 @@
+# Ignore node modules and other big folders
+node_modules
+dist
+*.log
+*.env
+*.tgz
+.vscode
+.idea
+.git
+coverage
+.DS_Store
+Dockerfile
+Containerfile
+.dockerignore

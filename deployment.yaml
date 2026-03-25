@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mypelantikan-ui
+  labels:
+    app: mypelantikan-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mypelantikan-ui
+  template:
+    metadata:
+      labels:
+        app: mypelantikan-ui
+    spec:
+      imagePullSecrets:
+        - name: kaicred
+      containers:
+        - name: mypelantikan-ui
+          image: terung.kai.2enapps.my/jpm/mypelantikan/mypelantikan-ui:0.2
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mypelantikan-ui
+spec:
+  type: ClusterIP
+  selector:
+    app: mypelantikan-ui
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mypelantikan-ui
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: mypelantikan.lokal.my
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mypelantikan-ui
+                port:
+                  number: 80

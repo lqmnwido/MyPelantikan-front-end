@@ -1,0 +1,1105 @@
+{
+  "t-menu": "Menu",
+  "navbar": {
+    "search": {
+      "text": "Search..."
+    },
+    "dropdown": {
+      "megamenu": {
+        "text": "Mega Menu",
+        "uicontent": {
+          "title": "UI Components",
+          "list": {
+            "lightbox": "Lightbox",
+            "rangeslider": "Range Slider",
+            "sweetalert": "Sweet Alert",
+            "rating": "Rating",
+            "forms": "Forms",
+            "tables": "Tables",
+            "charts": "Charts"
+          }
+        },
+        "application": {
+          "title": "Applications",
+          "list": {
+            "ecommerce": "Ecommece",
+            "calendar": "Calendar",
+            "email": "Email",
+            "projects": "Projects",
+            "tasks": "Tasks",
+            "contacts": "Contacts"
+          }
+        },
+        "extrapages": {
+          "title": "Extra Pages",
+          "list": {
+            "lightsidebar": "Light Sidebar",
+            "compactsidebar": "Compact Sidebar",
+            "horizontallayout": "Horizontal Layout",
+            "maintenance": "Maintenance",
+            "comingsoon": "Coming Soon",
+            "timeline": "Timeline",
+            "faqs": "FAQs"
+          }
+        }
+      },
+      "site": {
+        "list": {
+          "github": "GitHub",
+          "bitbucket": "Bitbucket",
+          "dribbble": "Dribbble",
+          "dropbox": "Dropbox",
+          "mailchimp": "Mail Chimp",
+          "slack": "Slack"
+        }
+      },
+      "notification": {
+        "badge": "3",
+        "text": "Notifications",
+        "subtext": "View All",
+        "order": {
+          "title": "Your order is placed",
+          "text": "If several languages coalesce the grammar",
+          "time": "3 min ago"
+        },
+        "james": {
+          "title": "James Lemire",
+          "text": "It will seem like simplified English.",
+          "time": "1 hours ago"
+        },
+        "item": {
+          "title": "Your item is shipped",
+          "text": "If several languages coalesce the grammar",
+          "time": "3 min ago"
+        },
+        "salena": {
+          "title": "Salena Layfield",
+          "text": "As a skeptical Cambridge friend of mine occidental.",
+          "time": "1 hours ago"
+        },
+        "button": "View More.."
+      },
+      "henry": {
+        "text": "Henry",
+        "list": {
+          "profile": "Profile",
+          "mywallet": "My Wallet",
+          "settings": "Settings",
+          "lockscreen": "Lock screen",
+          "logout": "Log Keluar",
+          "changePassword": "Tukar Kata Laluan"
+        }
+      }
+    }
+  },
+  "menuitems": {
+    "menu": {
+      "text": "Menu"
+    },
+    "dashboards": {
+      "text": "Dashboard",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "penyelenggaraan-pengguna": {
+      "text": "Penyelenggaraan Pengguna",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "laporan": {
+      "text": "Laporan Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "penyelenggaraan-templat": {
+      "text": "Penyelenggaraan Templat",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai": {
+      "text": "Senarai Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    
+    "kemaskini-tab-pengguna": {
+      "text": "Kemaskini Tab Pengguna",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai-pengguna": {
+      "text": "Senarai Pengguna",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "daftar-pengguna": {
+      "text": "Daftar Pengguna",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai-pelantikan": {
+      "text": "Senarai Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "dasar-lantikan": {
+      "text": "Dasar Lantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai-lantikan": {
+      "text": "Senarai Dasar Lantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "tambah-ahli": {
+      "text": "Tambah Ahli",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "carian-lanjutan": {
+      "text": "Carian Lanjutan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "carian-tamat-tempoh": {
+      "text": "Carian Tamat Tempoh",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "carian": {
+      "text": "Carian",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "notifikasi": {
+      "text": "Notifikasi",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai-notifikasi": {
+      "text": "Senarai Notifikasi",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "maklumat-notifikasi": {
+      "text": "Maklumat Notifikasi",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "urus-rekod-lantikan": {
+      "text": "Urus Rekod Lantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "tambah-rekod-pelantikan": {
+      "text": "Tambah Dokumen Rekod Lantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "laman-utama": {
+      "text": "Laman Utama",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "statistik-parti": {
+      "text": "Statistik Parti",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "rekod-pelantikan": {
+      "text": "Rekod Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai-profil": {
+      "text": "Senarai Profil",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai-tamat-tempoh": {
+      "text": "Senarai Tamat Tempoh",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "pengurusan-dokumen-pelantikan": {
+      "text": "Pengurusan Dokumen Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "pentadbir": {
+      "text": "Pentadbir",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "pengurusan-sistem": {
+      "text": "Pengurusan Sistem",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "penyelenggaraan-kod": {
+      "text": "Penyelenggaraan Kod",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "penyelenggaraan-lookup": {
+      "text": "Log Data Lookup",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai-adn": {
+      "text": "Ahli Dewan Negara",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "log-Integrasi": {
+      "text": "Log Data Integrasi",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "parlimen-malaysia": {
+      "text": "Sistem Parlimen Malaysia",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "myParlimen": {
+      "text": "MyParlimen",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "MyPRU": {
+      "text": "MyPRU",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "aduan": {
+      "text": "Aduan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "log-aduan": {
+      "text": "Log Aduan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kategori-pelantikan": {
+      "text": "Kategori Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "pelantikan": {
+      "text": "Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "alamat": {
+      "text": "Jenis Alamat",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "telefon": {
+      "text": "Jenis Telefon",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kahwin": {
+      "text": "Status kahwin",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "keanggotaan": {
+      "text": "Keanggotaan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "size-file": {
+      "text": "Konfigurasi Saiz Fail",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-gabungan-parti": {
+      "text": "Gabungan Parti",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-lantikan": {
+      "text": "Kod Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-jantina": {
+      "text": "Jantina",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-parti": {
+      "text": "Parti",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-agama": {
+      "text": "Agama",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-gelaran": {
+      "text": "Gelaran",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-negeri": {
+      "text": "Negeri",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-bandar": {
+      "text": "Bandar",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-bangsa": {
+      "text": "Bangsa",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-poskod": {
+      "text": "Poskod",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-gred-hakiki": {
+      "text": "Gred Hakiki",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "kod-status-kahwin": {
+      "text": "Status Kahwin",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "senarai-dokumen-rekod-lantikan": {
+      "text": "Senarai Dokumen Rekod Lantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "mrr-scp": {
+      "text": "Majlis Raja-Raja & Surat Cara Pelantikan",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
+    "layouts": {
+      "text": "Layouts",
+      "list": {
+        "horizontal": "Horizontal",
+        "lightsidebar": "Light Sidebar",
+        "compactsidebar": "Compact Sidebar",
+        "iconsidebar": "Icons Sidebar",
+        "boxed": "Boxed Layout",
+        "coloredsidebar": "Colored Sidebar",
+        "vertical": "Vertical",
+        "lighttopbar": "Light Topbar",
+        "coloredheader": "Colored Header"
+      }
+    },
+    "apps": {
+      "text": "Apps"
+    },
+    "calendar": {
+      "text": "Calendar"
+    },
+    "chat": {
+      "text": "Chat",
+      "badge": "New"
+    },
+    "filemanager": {
+      "text": "File Manager"
+    },
+    "ecommerce": {
+      "text": "Ecommerce",
+      "list": {
+        "products": "Products",
+        "productdetail": "Product Detail",
+        "orders": "Orders",
+        "customers": "Customers",
+        "cart": "Cart",
+        "checkout": "Checkout",
+        "shops": "Shops",
+        "addproduct": "Add Product"
+      }
+    },
+    "crypto": {
+      "text": "Crypto",
+      "list": {
+        "wallet": "Wallet",
+        "buy/sell": "Buy/sell",
+        "exchange": "Exchange",
+        "lending": "Lending",
+        "orders": "Orders",
+        "kycapplication": "KYC Application",
+        "icolanding": "ICO Landing"
+      }
+    },
+    "email": {
+      "text": "Email",
+      "list": {
+        "inbox": "Inbox",
+        "reademail": "Read Email",
+        "template": {
+          "text": "Templates",
+          "list": {
+            "basic": "Basic Action",
+            "alert": "Alert Email",
+            "billing": "Billing Email"
+          }
+        }
+      }
+    },
+    "invoices": {
+      "text": "Invoices",
+      "list": {
+        "invoicelist": "Invoice List",
+        "invoicedetail": "Invoice Detail"
+      }
+    },
+    "projects": {
+      "text": "Projects",
+      "list": {
+        "grid": "Projects Grid",
+        "projectlist": "Projects List",
+        "overview": "Project Overview",
+        "create": "Create New"
+      }
+    },
+    "tasks": {
+      "text": "Tasks",
+      "list": {
+        "tasklist": "Task List",
+        "kanban": "Kanban Board",
+        "createtask": "Create Task"
+      }
+    },
+    "contacts": {
+      "text": "Contacts",
+      "list": {
+        "usergrid": "User Grid",
+        "userlist": "User List",
+        "profile": "Profile"
+      }
+    },
+    "blog": {
+      "text": "Blog",
+      "list": {
+        "bloglist": "Blog List",
+        "grid": "Blog Grid",
+        "detail": "Blog Details"
+      }
+    },
+    "jobs": {
+      "text": "Jobs",
+      "badge": "New",
+      "list": {
+        "job-list": "Job List",
+        "job-grid": "Job Grid",
+        "job-apply": "Job Apply",
+        "job-details": "Job Details",
+        "job-categories": "Job Categories",
+        "candidate": {
+          "text": "Candidate",
+          "list": "List",
+          "overview": "Overview"
+        }
+      }
+    },
+    "pages": {
+      "text": "Pages"
+    },
+    "authentication": {
+      "text": "Authentication",
+      "list": {
+        "login": "Login",
+        "login-2": "Login 2",
+        "register": "Register",
+        "register-2": "Register 2",
+        "recoverpwd": "Recover Password",
+        "recoverpwd-2": "Recover Password 2",
+        "lockscreen": "Lock screen",
+        "lockscreen-2": "Lock screen 2",
+        "confirm-mail": "Confirm Mail",
+        "confirm-mail-2": "Confirm Mail 2",
+        "verification": "Email verification",
+        "verification-2": "Email verification 2",
+        "verification-step": "Two step verification",
+        "verification-step-2": "Two step verification 2"
+      }
+    },
+    "utility": {
+      "text": "Utility",
+      "list": {
+        "starter": "Starter Page",
+        "maintenance": "Maintenance",
+        "timeline": "Timeline",
+        "faqs": "FAQs",
+        "pricing": "Pricing",
+        "error404": "Error 404",
+        "error500": "Error 500",
+        "comingsoon": "Coming Soon"
+      }
+    },
+    "components": {
+      "text": "Components"
+    },
+    "uielements": {
+      "text": "UI Elements",
+      "list": {
+        "alerts": "Alerts",
+        "buttons": "Buttons",
+        "cards": "Cards",
+        "carousel": "Carousel",
+        "dropdowns": "Dropdowns",
+        "grid": "Grid",
+        "images": "Images",
+        "modals": "Modals",
+        "rangeslider": "Range Slider",
+        "progressbar": "Progress Bars",
+        "placeholder": "Placeholder",
+        "sweetalert": "Sweet Alert",
+        "tabs": "Tabs & Accordions",
+        "typography": "Typography",
+        "video": "Video",
+        "general": "General",
+        "colors": "Colors",
+        "lightbox": "Lightbox",
+        "cropper": "Image Cropper",
+        "offcanvas": "Offcanvas",
+        "utilities": {
+          "text": "utilities",
+          "badge": "New"
+        }
+      }
+    },
+    "forms": {
+      "text": "Forms",
+      "badge": "9",
+      "list": {
+        "elements": "Form Elements",
+        "layouts": "Form Layouts",
+        "validation": "Form Validation",
+        "advanced": "Form Advanced",
+        "editor": "Form Editor",
+        "fileupload": "Form File Upload",
+        "repeater": "Form Repeater",
+        "wizard": "Form Wizard",
+        "mask": "Form Mask"
+      }
+    },
+    "tables": {
+      "text": "Tables",
+      "list": {
+        "basic": "Basic Tables",
+        "advanced": "Advanced Table"
+      }
+    },
+    "charts": {
+      "text": "Charts",
+      "list": {
+        "apex": "Apex Charts",
+        "chartjs": "Chartjs Charts",
+        "chartist": "Chartist Charts",
+        "echart": "E Charts"
+      }
+    },
+    "icons": {
+      "text": "Icons",
+      "list": {
+        "boxicons": "Boxicons",
+        "materialdesign": "Material Design",
+        "dripicons": "Dripicons",
+        "fontawesome": "Font Awesome"
+      }
+    },
+    "maps": {
+      "text": "Maps",
+      "list": {
+        "googlemap": "Google Maps",
+        "amcharts": "Amcharts Maps"
+      }
+    },
+    "multilevel": {
+      "text": "Multi Level",
+      "list": {
+        "level1": {
+          "1": "Level 1.1",
+          "2": "Level 1.2",
+          "level2": {
+            "1": "Level 2.1",
+            "2": "Level 2.2"
+          }
+        }
+      }
+    }
+  }
+}
