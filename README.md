@@ -45,7 +45,7 @@ Ensure you have the following installed:
 Navigate to the frontend directory and install the necessary packages:
 ```bash
 cd front-end
-npm install
+npm install --peer legacy
 ```
 
 ### 2. Configure Environment Variables
