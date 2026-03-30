@@ -8,7 +8,7 @@
           <div class="card shadow-sm p-4">
             <SenaraiBuilder :jenisPelantikan="jenisPelantikan" :headers="headers"
               :jenisPelantikanOptions="jenisPelantikanOptions" :variableOptions="variableOptions"
-              @update:jenisPelantikan="jenisPelantikan = $event" @add-header="addHeader" @remove-header="removeHeader"
+              @update:jenisPelantikan="jenisPelantikan = $event" @update:headers="headers = $event" @add-header="addHeader" @remove-header="removeHeader"
               @save-template="submitTemplate" :loading="loading"/>
           </div>
         </div>
@@ -70,8 +70,9 @@ export default {
       try {
         const template = await templateSenaraiService.getTemplateByID(id);
         this.jenisPelantikan = { id: template.jenis_pelantikan, label: template.name };
-        this.headers = template.headers.map(h => ({
+        this.headers = template.headers.map((h, idx) => ({
           ...h,
+          id: h.id || `header-${Date.now()}-${idx}`,
           customVariable: h.custom_variable
         }));
       } catch (error) {

@@ -425,6 +425,7 @@ tbody.position-relative {
 
 .btn-print {
   width: 150px;
+  font-family: Arial, sans-serif;
 }
 
 .btn-cari {

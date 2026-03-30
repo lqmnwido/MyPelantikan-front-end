@@ -16,7 +16,7 @@
         <template #title><span class="d-none d-sm-inline-block">Editor</span></template>
       </BTab>
       <BTab @click="changeTab('preview')" :class="['nav-link', selectedTab === 'preview' ? 'active' : '']">
-        <template #title><span class="d-none d-sm-inline-block">Paparan Awal</span></template>
+        <template #title><span class="d-none d-sm-inline-block">Preview</span></template>
       </BTab>
     </BTabs>
 
@@ -24,7 +24,7 @@
     <div v-if="selectedTab === 'editor'" class="mt-3">
       <div class="form-check mb-3">
         <input type="checkbox" class="form-check-input" id="livePreview" v-model="livePreview" />
-        <label class="form-label" for="livePreview">Tunjukkan paparan awal semasa mengedit</label>
+        <label class="form-label" for="livePreview">Tunjukkan live preview semasa mengedit</label>
       </div>
 
       <!-- Draggable for text + table only -->
@@ -37,7 +37,7 @@
                 <div class="d-flex align-items-center">
                   <span class="drag-handle me-2" style="cursor: grab">⠿</span>
                   <h6>
-                    {{ block.type === "text" ? "Text Editor" : "Janaan Jadual" }}
+                    {{ block.type === "text" ? "Text Editor" : "Table Builder" }}
                     #{{ bIndex + 1 }}
                   </h6>
                 </div>
@@ -65,7 +65,7 @@
                       </option>
                     </select>
                   </div>
-
+                  
                 </div>
 
                 <!-- Column Controls -->
@@ -79,67 +79,57 @@
                 <div class="table-responsive" style="overflow-x: auto; display: block">
                   <table class="table table-bordered" style="min-width: 100%">
                     <thead>
-                      <draggable v-model="block.headers" tag="tr" item-key="id" handle=".column-drag-handle"
-                        @start="onColumnDragStart(block)" @end="onColumnDragEnd(block)">
-                        <template #header>
-                          <th style="width: 5%; text-align: center">
-                            <label class="form-label small">Tajuk Lajur Indeks</label>
-                            <input type="text" v-model="block.indexHeader" class="form-control form-control-sm"
-                              placeholder="#" />
-                            <label class="form-label small mt-1">Penomboran Bermula dari Baris</label>
-                            <input type="number" v-model.number="block.startRow" class="form-control form-control-sm"
-                              placeholder="1" @input="updateRows(block)" />
-                          </th>
-                        </template>
-                        <template #item="{ element: header, index: hIndex }">
-                          <th :style="{ width: header.width + '%' }">
-                            <div class="d-flex align-items-center mb-1">
-                              <span class="column-drag-handle me-2" style="cursor: grab">⠿</span>
-                              <label class="form-label small mb-0">Tajuk Lajur #{{ hIndex + 1 }}</label>
-                            </div>
-                            <input v-model="header.text" placeholder="Header Name"
-                              class="form-control form-control-sm mb-1" @input="updateRows(block)" />
-                            <label class="form-label small">Data Rujukan</label>
-                            <select v-model="header.field" class="form-select form-select-sm mb-2"
-                              @change="headerFieldChanged(block)">
-
-                              <option v-for="field in variablesField" :key="field" :value="field">{{ field }}</option>
-                              <option value="__custom__">Custom</option>
-                            </select>
-                            <div v-if="header.field === '__custom__'" class="mb-2">
-                              <label class="form-label small">Custom Format</label>
-                              <textarea v-model="header.format" rows="1" class="form-control form-control-sm"
-                                @input="updateRows(block)" placeholder="Example: {{nama}} ( {{umur}} )" />
-                            </div>
-                            <label class="form-label small">Alignment</label>
-                            <select v-model="header.align" class="form-select form-select-sm mb-1"
-                              @change="updateRows(block)">
-                              <option value="left">Left</option>
-                              <option value="center">Center</option>
-                              <option value="right">Right</option>
-                              <option value="justify">Justify</option>
-                            </select>
-                            <label class="form-label small">Lebar Lajur (%)</label>
-                            <div class="input-group mb-2">
-                              <input type="number" v-model.number="header.width" class="form-control form-control-sm"
-                                @input="syncWidths(block)" />
-                              <span class="input-group-text">%</span>
-                            </div>
-                            <button class="btn btn-sm btn-outline-danger w-100 mt-2"
-                              @click="removeColumn(block, hIndex)">
-                              Remove
-                            </button>
-                          </th>
-                        </template>
-                      </draggable>
+                      <tr>
+                        <th style="width: 5%; text-align: center">
+                          <label class="form-label small">Index Header</label>
+                          <input type="text" v-model="block.indexHeader" class="form-control form-control-sm"
+                            placeholder="#" />
+                          <label class="form-label small mt-1">Start Row</label>
+                          <input type="number" v-model.number="block.startRow" class="form-control form-control-sm"
+                            placeholder="1" @input="updateRows(block)" />
+                        </th>
+                        <th v-for="(header, hIndex) in block.headers" :key="hIndex"
+                          :style="{ width: header.width + '%' }">
+                          <label class="form-label small">Header Name</label>
+                          <input v-model="header.text" placeholder="Header Name"
+                            class="form-control form-control-sm mb-1" @input="updateRows(block)" />
+                          <label class="form-label small">Bind Field</label>
+                          <select v-model="header.field" class="form-select form-select-sm mb-2"
+                            @change="updateRows(block)">
+                            <option v-for="field in variablesField" :key="field" :value="field">{{ field }}</option>
+                            <option value="__custom__">Custom</option>
+                          </select>
+                          <div v-if="header.field === '__custom__'" class="mb-2">
+                            <label class="form-label small">Custom Format</label>
+                            <textarea v-model="header.format" rows="1" class="form-control form-control-sm"
+                              @input="updateRows(block)" placeholder="Example: {{nama}} ( {{umur}} )" />
+                          </div>
+                          <label class="form-label small">Alignment</label>
+                          <select v-model="header.align" class="form-select form-select-sm mb-1"
+                            @change="updateRows(block)">
+                            <option value="left">Left</option>
+                            <option value="center">Center</option>
+                            <option value="right">Right</option>
+                            <option value="justify">Justify</option>
+                          </select>
+                          <label class="form-label small">Width (%)</label>
+                          <div class="input-group mb-2">
+                            <input type="number" v-model.number="header.width" class="form-control form-control-sm"
+                              @input="syncWidths(block)" />
+                            <span class="input-group-text">%</span>
+                          </div>
+                          <button class="btn btn-sm btn-outline-danger w-100 mt-2" @click="removeColumn(block, hIndex)">
+                            Remove
+                          </button>
+                        </th>
+                      </tr>
                     </thead>
                   </table>
                 </div>
               </div>
 
               <!-- Live Preview -->
-              <hr v-if="livePreview" class="my-3 border-secondary opacity-25" />
-              <div v-if="livePreview" class="mt-3 p-2 border rounded bg-secondary-subtle">
+              <div v-if="livePreview" class="mt-3 p-2 border rounded bg-light">
                 <div v-if="block.type === 'text'" class="ql-editor" v-html="block.content"></div>
                 <div v-else-if="block.type === 'table'">
                   <div class="table-responsive" style="overflow-x: auto">
@@ -162,24 +152,8 @@
                           </td>
                           <td v-for="(cell, cIndex) in row" :key="cIndex" :style="{
                             textAlign: block.headers[cIndex].align,
-                            width: block.headers[cIndex].width + '%'
-                          }">
-                            <!-- ✅ Editable cell with formatted preview -->
-                            <template v-if="cell.type === 'input'">
-                              <div class="d-flex flex-column">
-                                <input type="text" class="form-control form-control-sm mb-1"
-                                  v-model="block.manualInputs[cell.key]" />
-                                <!-- show rendered formatted text under input -->
-                                <div v-html="cell.extraText" class="text-start small text-muted"></div>
-                              </div>
-                            </template>
-
-                            <!-- Normal text cell -->
-                            <template v-else>
-                              <span v-html="cell.value"></span>
-                            </template>
-                          </td>
-
+                            width: block.headers[cIndex].width + '%',
+                          }" v-html="cell"></td>
                         </tr>
                       </tbody>
                     </table>
@@ -277,16 +251,10 @@
                     <td :style="{ width: '5%', textAlign: 'center' }">
                       {{ getIndexNumber(block, rIndex) }}
                     </td>
-                    <td v-for="(cell, cIndex) in row" :key="cIndex"
-                      :style="{ textAlign: block.headers[cIndex].align, width: block.headers[cIndex].width + '%' }">
-                      <template v-if="cell.type === 'input'">
-                        <span v-html="block.manualInputs[cell.key]"></span><br>
-                        <span v-if="cell.extraText" v-html="cell.extraText"></span>
-                      </template>
-                      <template v-else>
-                        <span v-html="cell.value"></span>
-                      </template>
-                    </td>
+                    <td v-for="(cell, cIndex) in row" :key="cIndex" :style="{
+                      textAlign: block.headers[cIndex].align,
+                      width: block.headers[cIndex].width + '%',
+                    }" v-html="cell"></td>
                   </tr>
                 </tbody>
               </table>
@@ -360,7 +328,7 @@ export default {
     variableJson: { type: Object, default: () => ({}) },
     jenisPelantikan: { type: Array, default: () => [] },
     jenisPelantikanOptions: { type: Array, default: () => [] },
-
+    
   },
   data() {
     return {
@@ -377,7 +345,6 @@ export default {
       templateName: "",
       selectedJenisPelantikanName: null,
       blocks: [],
-      draggedColumnOldOrder: [],
       editorOptions: {
         modules: {
           toolbar: {
@@ -400,6 +367,11 @@ export default {
               },
             },
           },
+          keyboard: {
+            bindings: {
+              list: false
+            }
+          }
         },
       },
     };
@@ -447,7 +419,6 @@ export default {
     if (this.initialData) {
       this.selectedJenisPelantikanName = this.initialData.name || null;
       this.blocks = this.initialData.blocks || [];
-      this.ensureHeaderIds(this.blocks);
       this.blocks.forEach((b) => {
         if (b.type === "table") {
           b.dataRowCount = b.rowCount - ((b.startRow || 1) - 1);
@@ -471,18 +442,6 @@ export default {
     // All editor cleanup is now handled by the ToastEditor component
   },
   methods: {
-    ensureHeaderIds(blocks) {
-      if (!blocks) return;
-      blocks.forEach((b) => {
-        if (b.type === "table" && b.headers) {
-          b.headers.forEach((h) => {
-            if (!h.id) {
-              h.id = `h-${Math.random().toString(36).substr(2, 9)}`;
-            }
-          });
-        }
-      });
-    },
     changeTab(tab) {
       this.selectedTab = tab;
     },
@@ -494,11 +453,9 @@ export default {
         const template = res.template || {};
         this.selectedJenisPelantikanName = template.name || null;
         this.blocks = template.blocks || [];
-        this.ensureHeaderIds(this.blocks);
 
         this.blocks.forEach((b) => {
           if (b.type === "table") {
-            if (!b.manualInputs) b.manualInputs = {};
             b.dataRowCount = b.rowCount - ((b.startRow || 1) - 1);
             this.updateRows(b);
           }
@@ -557,13 +514,12 @@ export default {
           id: Date.now() + Math.random(),
           type: "table",
           headers: [
-            { id: `h-${Date.now()}`, text: "Header", field: "", format: "", align: "left", width: 20 },
+            { text: "Header", field: "", format: "", align: "left", width: 20 },
           ],
           rows: [],
           filterJenis: "",
           indexHeader: "#",
           startRow: 1,
-          manualInputs: {},
         };
         this.blocks.push(newTable);
         this.updateRows(newTable);
@@ -603,7 +559,6 @@ export default {
 
     addColumn(block) {
       block.headers.push({
-        id: `h-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
         text: "Header",
         field: "",
         format: "",
@@ -629,7 +584,6 @@ export default {
 
     updateRows(block, recalculate = false) {
       let dataRowCount = 0;
-
       if (block.dataRowCount && !recalculate) {
         dataRowCount = block.dataRowCount;
       } else if (block.rowCount && !recalculate) {
@@ -649,60 +603,35 @@ export default {
       }
 
       const totalRows = dataRowCount + (block.startRow || 1) - 1;
-      const rows = [];
 
+      const rows = [];
       for (let i = 0; i < totalRows; i++) {
         const record = {};
         const dataIndex = i - ((block.startRow || 1) - 1);
 
         if (dataIndex >= 0 && dataIndex < dataRowCount) {
-          for (const key of Object.keys(this.variableJson)) {
-            record[key] =
-              (Array.isArray(this.variableJson[key])
-                ? this.variableJson[key][dataIndex]
-                : undefined) || "";
-          }
+            for (const key of Object.keys(this.variableJson)) {
+              record[key] =
+                (Array.isArray(this.variableJson[key])
+                  ? this.variableJson[key][dataIndex]
+                  : undefined) || "";
+            }
         }
 
-        const row = block.headers.map((h, cIndex) => {
-          const key = `${i}-${cIndex}`;
-          if (!block.manualInputs) block.manualInputs = {};
-          if (!(key in block.manualInputs)) block.manualInputs[key] = "";
-
-          // ✅ For __custom__ field — combine input + formatted text
-          if (h.field === "__custom__" && h.format) {
-            const inputValue = block.manualInputs[key];
-            const tempRecord = { ...record, peranan: inputValue };
-            const formatted = this.applyCustomFormat(h.format, tempRecord);
-
-            // Always put input ABOVE the formatted text
-            const combined = `${formatted}`;
-
-            return {
-              type: "input",
-              key,
-              value: inputValue,
-              extraText: combined
-            };
+        const row = block.headers.map((h) => {
+          if (dataIndex < 0) {
+              return "";
           }
-
-          // ✅ Normal text fields
-          if (h.field && this.variableJson[h.field] !== undefined) {
-            return {
-              type: "text",
-              value: this.variableJson[h.field][dataIndex] || ""
-            };
-          }
-
-          return { type: "text", value: "" };
+          if (h.field === "__custom__" && h.format)
+            return this.applyCustomFormat(h.format, record);
+          if (h.field && this.variableJson[h.field] !== undefined)
+            return this.variableJson[h.field][dataIndex] || "";
+          return "";
         });
-
         rows.push(row);
       }
-
       block.rows = rows;
     },
-
 
     getIndexNumber(block, rIndex) {
       if (rIndex + 1 < (block.startRow || 1)) return "";
@@ -738,91 +667,32 @@ export default {
       this.blocks = newBlocks;
     },
 
-    onColumnDragStart(block) {
-      this.draggedColumnOldOrder = block.headers.map(h => h.id);
-    },
-
-    onColumnDragEnd(block) {
-      const oldOrderIds = this.draggedColumnOldOrder;
-      const newOrderIds = block.headers.map((h) => h.id);
-
-      // We only proceed if anything actually moved
-      let changed = false;
-      for (let i = 0; i < oldOrderIds.length; i++) {
-        if (oldOrderIds[i] !== newOrderIds[i]) {
-          changed = true;
-          break;
-        }
-      }
-
-      if (changed && block.manualInputs) {
-        const newManualInputs = {};
-
-        // Iterate over all rows and all columns
-        // We use IDs to find where data should move
-        Object.keys(block.manualInputs).forEach((oldKey) => {
-          const match = oldKey.match(/^(\d+)-(\d+)$/);
-          if (match) {
-            const rowIndex = match[1];
-            const oldColIndex = parseInt(match[2]);
-
-            // Get the ID of the column that was at oldColIndex
-            const columnId = oldOrderIds[oldColIndex];
-            if (columnId) {
-              // Find where this column is now
-              const newColIndex = newOrderIds.indexOf(columnId);
-              if (newColIndex !== -1) {
-                const newKey = `${rowIndex}-${newColIndex}`;
-                newManualInputs[newKey] = block.manualInputs[oldKey];
-              }
-            }
-          } else {
-            // Keep keys that don't match the row-col pattern (if any)
-            newManualInputs[oldKey] = block.manualInputs[oldKey];
-          }
-        });
-
-        block.manualInputs = newManualInputs;
-      }
-
-      this.updateRows(block);
-    },
-
     async saveTemplate() {
       if (!this.templateName) {
         alert("Nama laporan diperlukan.");
         return;
       }
-
       const blocksWithRowCount = this.blocks.map((block) => {
         if (block.type === "table") {
-          // ✅ Filter out null, undefined, or empty inputs (including whitespace)
-          const filteredManualInputs = Object.fromEntries(
-            Object.entries(block.manualInputs || {}).filter(
-              ([, v]) => v && v.toString().trim() !== ""
-            )
-          );
-
           return {
             ...block,
             rows: undefined,
             rowCount: block.rows.length,
-            manualInputs: filteredManualInputs,
           };
         }
         return block;
       });
-
       const payload = { name: this.templateName, blocks: blocksWithRowCount };
-
+      // console.log("Saving template with payload:", payload);
       try {
         await templateService.simpanTemplateReport(payload);
         this.alert.successTambah = true;
-        this.$router.push("/pentadbir/senarai-laporan");
+        this.$router.push('/pentadbir/senarai-laporan');
       } catch (err) {
         this.alert.error = true;
-        this.alert.errorMessage =
-          err?.response?.data?.message || err.message || "Ralat tidak diketahui";
+        this.alert.errorMessage = err?.response?.data?.message || err.message || 'Ralat tidak diketahui';
+        // console.log("Error:", error);
+        // alert("Gagal untuk menyimpan template.");
       }
     },
 
@@ -834,33 +704,27 @@ export default {
 
       const blocksWithRowCount = this.blocks.map((block) => {
         if (block.type === "table") {
-          // ✅ Apply the same filtering logic during update
-          const filteredManualInputs = Object.fromEntries(
-            Object.entries(block.manualInputs || {}).filter(
-              ([, v]) => v && v.toString().trim() !== ""
-            )
-          );
-
           return {
             ...block,
             rows: undefined,
-            rowCount: block.rows.length,
-            manualInputs: filteredManualInputs,
+            rowCount: block.rows.length
           };
         }
         return block;
       });
 
       const payload = { name: this.templateName, blocks: blocksWithRowCount };
+      // console.log("Updating template with payload:", payload);
+
+      // console.log("Updating template with ID:", this.localTemplateId, payload);
 
       try {
         await templateService.kemaskiniTemplateReport(this.localTemplateId, payload);
         this.alert.successKemaskini = true;
-        this.$router.push("/pentadbir/senarai-laporan");
+        this.$router.push('/pentadbir/senarai-laporan');
       } catch (err) {
         this.alert.error = true;
-        this.alert.errorMessage =
-          err?.response?.data?.message || err.message || "Ralat tidak diketahui";
+        this.alert.errorMessage = err?.response?.data?.message || err.message || 'Ralat tidak diketahui';
       }
     },
 
@@ -868,10 +732,10 @@ export default {
       this.updateRows(block, true);
     },
 
-
+    
 
     headerFieldChanged(block) {
-      this.updateRows(block, true);
+      this.updateRows(block);
     },
 
     handlBack() {

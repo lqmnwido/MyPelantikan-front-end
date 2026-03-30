@@ -686,7 +686,7 @@ export default {
                         const parts = text.split('\n');
                         parts.forEach((part, index) => {
                             if (part) {
-                                runs.push(new docx.TextRun({ text: part, ...inherited }));
+                                runs.push(new docx.TextRun({ text: part, font: "Arial", ...inherited }));
                             }
                             if (index < parts.length - 1) {
                                 runs.push(new docx.TextRun({ text: "", break: 1 }));
@@ -697,7 +697,7 @@ export default {
 
                     if (node.nodeType === Node.ELEMENT_NODE) {
                         const style = window.getComputedStyle(node);
-                        const newInherited = { ...inherited };
+                        const newInherited = { ...inherited, font: "Arial"};
                         const tagName = node.tagName.toLowerCase();
 
                         if (tagName === 'b' || tagName === 'strong' || parseInt(style.fontWeight) >= 600) newInherited.bold = true;

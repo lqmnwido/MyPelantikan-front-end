@@ -37,20 +37,25 @@ export default {
     },
 
     menuItemsByPermission() {
-      const role = (this.currentUser.peranan || "guest").trim();
+      const role = (this.currentUser.peranan || "guest").trim().toLowerCase();
       const permissions = this.auth.tabPermissions || [];
 
       // console.log("role:", role, " permissions:", permissions);
 
-      const checkPermission = (menuId) => {
-        const perm = permissions.find((p) => p.id === menuId);
-        return perm ? perm[role] === true : false;
+      const checkPermission = (item) => {
+        // First check hardcoded roles in menu.js
+        if (item.roles && !item.roles.includes(role)) {
+          return false;
+        }
+
+        // Then check DB permissions
+        const perm = permissions.find((p) => p.id === item.id);
+        return perm ? perm[role.replace(" ", "")] === true || perm[role] === true : false;
       };
 
       const filterMenu = (items) => {
-
         return items
-          .filter((item) => item.isTitle || checkPermission(item.id))
+          .filter((item) => item.isTitle || checkPermission(item))
           .map((item) => ({
             ...item,
             subItems: item.subItems ? filterMenu(item.subItems) : [],
@@ -62,7 +67,6 @@ export default {
               item.link
           );
       };
-
 
       return filterMenu(this.originalMenuItems);
     },

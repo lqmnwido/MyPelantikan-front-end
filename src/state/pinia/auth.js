@@ -62,7 +62,7 @@ export const useAuthStore = defineStore("auth", {
         },
         setPermissions(permissions) {
             this.tabPermissions = permissions;
-            // localStorage.setItem("tabPermissions", JSON.stringify(permissions)); // ✅ save
+            localStorage.setItem("tabPermissions", JSON.stringify(permissions));
         },
 
         async register({ nama, email, password }) {
@@ -118,10 +118,12 @@ export const useAuthStore = defineStore("auth", {
                 });
 
                 this.tabPermissions = Object.values(map)
+                localStorage.setItem("tabPermissions", JSON.stringify(this.tabPermissions));
                 // console.log("✅ Transformed permissions:", this.tabPermissions)
             } catch (error) {
                 console.error("❌ Failed to load permissions:", error)
                 this.tabPermissions = []
+                localStorage.removeItem("tabPermissions");
             }
         }
     },

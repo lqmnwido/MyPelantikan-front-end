@@ -430,8 +430,8 @@ export default {
                                     bold: inherited.bold || false,
                                     italics: inherited.italic || false,
                                     underline: inherited.underline ? {} : undefined,
-                                    font: inherited.font || "Arial",
-                                    size: inherited.size || 16,
+                                    font: "Arial",
+                                    size: inherited.size || 22,
                                 });
                                 runs.push(tr);
                             }
@@ -465,8 +465,7 @@ export default {
                             }
                         }
 
-                        if (style.fontFamily)
-                            newInherited.font = style.fontFamily.split(",")[0].replace(/['"]/g, "");
+                        newInherited.font = "Arial";
 
                         if (tag === "br") {
                             runs.push(new docx.TextRun({ text: "", break: 1 }));

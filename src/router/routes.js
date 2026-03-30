@@ -504,6 +504,13 @@ export default [
   },
 
   {
+    path: "/pentadbir/audit-log",
+    name: "audit-log",
+    meta: { title: "Log Audit", authRequired: true },
+    component: () => import("../views/pentadbir/audit-log"),
+  },
+
+  {
     path: "/pentadbir/aduan/tambah-aduan",
     name: "tambah-aduan",
     meta: { title: "Tambah Aduan", authRequired: true },
@@ -666,6 +673,12 @@ export default [
     name: "Error-404",
     meta: { title: "404 Error Page", authRequired: true },
     component: () => import("../views/utility/404"),
+  },
+  {
+    path: "/pages/403",
+    name: "Error-403",
+    meta: { title: "403 Error Page", authRequired: true },
+    component: () => import("../views/utility/403"),
   },
   {
     path: "/pages/500",

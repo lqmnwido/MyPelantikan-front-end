@@ -2,6 +2,9 @@
     <Layout>
         <PageHeader title="Senarai Notifikasi" pageTitle="Notifikasi" />
 
+        <ExportPDF :showBack="false" @print="exportToPDF"
+            @word="exportToWord" />
+
         <DataTable :headers="headers" :fields="fields" :items="tableData" :columnAlignments="columnAlignments"
             :topicLabel="topicLabel" :buttonTambah="false" :columnWidths="columnWidths" :total="total" :page="page"
             :perPage="perPage" :loading="loading" serverSide @change-page="onChangePage"
@@ -12,6 +15,47 @@
                 </button>
             </template>
         </DataTable>
+
+        <!-- Hidden Report Template -->
+        <div style="display: none;">
+            <div ref="pdfContent" style="padding: 20px; background: white; color: black;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h3 style="font-family: Arial, sans-serif; font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">
+                        Senarai Ahli Hampir Tamat Tempoh
+                    </h3>
+                    <div style="border-top: 2px solid #000; width: 100%; margin: 10px 0;"></div>
+                </div>
+
+                <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 10pt;" border="1">
+                    <thead style="background-color: #f2f2f2;">
+                        <tr>
+                            <th style="padding: 8px; text-align: center; width: 5%;">BIL.</th>
+                            <th style="padding: 8px; text-align: left; width: 70%;">NAMA (JAWATAN)</th>
+                            <th style="padding: 8px; text-align: center; width: 25%;">TARIKH TAMAT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in tableData" :key="index">
+                            <td style="padding: 8px; text-align: center; vertical-align: top;">
+                                {{ (page - 1) * perPage + (index + 1) }}
+                            </td>
+                            <td style="padding: 8px; vertical-align: top;">
+                                <div style="font-weight: bold;">{{ item.gelaran ? item.gelaran + ' ' + item.nama : item.nama }}</div>
+                                <div style="font-size: 9pt; color: #444;">{{ item.jawatan }}</div>
+                            </td>
+                            <td style="padding: 8px; text-align: center; vertical-align: top;">
+                                {{ item.tarikh_tamat }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 30px; font-family: Arial, sans-serif; font-size: 9pt; text-align: right;">
+                    <p>Tarikh Dijana: {{ new Date().toLocaleDateString('ms-MY') }}</p>
+                </div>
+            </div>
+        </div>
+
         <SweetAlert :show="alert.showConfirmDelete" type="warning" title="Anda pasti?"
             :html="`Tindakan ini akan hapuskan notifikasi: <b>${deleteTarget}</b>`" :showCancelButton="true"
             confirmButtonText="Ya, hapus" cancelButtonText="Batal" @confirmed="confirmDelete"
@@ -31,6 +75,10 @@ import PageHeader from "@/components/page-header";
 import DataTable from "@/components/DataTable.vue";
 import { notifikasiService } from "@/services/notifikasi.service";
 import SweetAlert from "@/components/SweetAlert.vue";
+import ExportPDF from "@/components/ReportTemplate/ExportPDF.vue";
+import html2pdf from "html2pdf.js";
+import { saveAs } from "file-saver";
+import htmlDocx from "html-docx-js/dist/html-docx";
 
 export default {
     components: {
@@ -38,12 +86,13 @@ export default {
         PageHeader,
         DataTable,
         SweetAlert,
+        ExportPDF,
     },
     data() {
         return {
             topicLabel: "Senarai Ahli Hampir Tamat Tempoh",
             headers: ["No", "Gambar", "Nama (Jawatan)", "Tarikh Tamat", "Tindakan"],
-            fields: ["index", "gambar", "nama", "tarikh_tamat", "actions"],
+            fields: ["index", "gambar", "nama_display", "tarikh_tamat", "actions"],
             columnAlignments: ["center", "center", "left", "center", "center",],
             columnWidths: ["5%", "10%", "55%", "20%", "10%"],
             tableData: [],
@@ -57,12 +106,8 @@ export default {
                 showSuccess: false,
                 error: false,
             },
-            leftFields: [
-                { label: 'Tajuk', model: 'tajuk', type: 'text', placeholder: 'Tajuk...' },
-            ],
-            rightFields: [
-                { label: 'Pelantikan', model: 'pelantikan', type: 'select', placeholder: 'SILA PILIH', options: [{ label: 'Tuan Yang Terutama', value: '1' }] },
-            ],
+            deleteTarget: "",
+            targetID: null,
         };
     },
     async mounted() {
@@ -87,7 +132,7 @@ export default {
                 this.tableData = (data || []).map((row, i) => ({
                     ...row,
                     index: (this.page - 1) * this.perPage + (i + 1),
-                    nama: row.gelaran ?
+                    nama_display: row.gelaran ?
                         `${row.gelaran} ${row.nama} <br> <span class="badge rounded-pill bg-primary text-white me-1">${row.jawatan}</span>` :
                         `${row.nama} <br> <span class="badge rounded-pill bg-primary text-white me-1">${row.jawatan}</span>`,
                 }));
@@ -131,6 +176,44 @@ export default {
                 this.alert.errorMessage = err?.response?.data?.message || err.message || 'Ralat tidak diketahui';
             }
         },
+
+        // Export Methods
+        exportToPDF() {
+            const el = this.$refs.pdfContent;
+            const opt = {
+                margin: [15, 15, 15, 15],
+                filename: `senarai_notifikasi_${new Date().toISOString().slice(0, 10)}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Temporarily show the element for capturing
+            const originalStyle = el.parentElement.style.display;
+            el.parentElement.style.display = 'block';
+
+            html2pdf().set(opt).from(el).save().then(() => {
+                el.parentElement.style.display = originalStyle;
+            });
+        },
+        exportToWord() {
+            const el = this.$refs.pdfContent;
+            
+            // Temporarily show the element for capturing
+            const originalStyle = el.parentElement.style.display;
+            el.parentElement.style.display = 'block';
+
+            const header = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head><meta charset='utf-8'></head><body>`;
+            const footer = "</body></html>";
+            const sourceHTML = header + el.innerHTML + footer;
+            
+            const converted = htmlDocx.asBlob(sourceHTML);
+            saveAs(converted, `senarai_notifikasi_${new Date().toISOString().slice(0, 10)}.docx`);
+
+            el.parentElement.style.display = originalStyle;
+        }
     },
 };
 </script>

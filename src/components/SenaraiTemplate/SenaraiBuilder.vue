@@ -29,54 +29,64 @@
                         <th style="width: 5%">Tindakan</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Existing headers -->
-                    <tr v-for="(h, i) in headers" :key="i">
-                        <td>{{ i + 1 }}</td>
-                        <td>
-                            <input type="text" v-model="h.label" class="form-control" placeholder="Contoh: Bil." />
-                        </td>
-                        <td>
-                            <!-- First header = always index -->
-                            <div v-if="i === 0" class="text-muted">index</div>
+                <draggable v-model="draggedHeaders" item-key="id" tag="tbody" handle=".drag-handle"
+                    @change="onDragChange">
+                    <template #item="{ element: h, index: i }">
+                        <tr :class="{ 'table-info': i === 0 }">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <i v-if="i !== 0" class="bx bx-move-vertical drag-handle me-2" style="cursor: grab;"></i>
+                                    {{ i + 1 }}
+                                </div>
+                            </td>
+                            <td>
+                                <input type="text" v-model="h.label" class="form-control" placeholder="Contoh: Bil." />
+                            </td>
+                            <td>
+                                <!-- First header = always index -->
+                                <div v-if="i === 0" class="text-muted">index</div>
 
-                            <!-- Other headers = dropdown -->
-                            <div v-else class="input-group">
-                                <select v-model="h.variable" class="form-select" @change="checkCustomVariable(h)">
-                                    <option disabled value="">-- Pilih Variable --</option>
-                                    <option v-for="opt in variableOptions" :key="opt.value" :value="opt.value">
-                                        {{ opt.label }}
-                                    </option>
-                                    <option value="custom">Custom</option>
+                                <!-- Other headers = dropdown -->
+                                <div v-else class="input-group">
+                                    <select v-model="h.variable" class="form-select" @change="checkCustomVariable(h)">
+                                        <option disabled value="">-- Pilih Variable --</option>
+                                        <option v-for="opt in variableOptions" :key="opt.value" :value="opt.value">
+                                            {{ opt.label }}
+                                        </option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                    <textarea v-if="h.variable === 'custom'" v-model="h.customVariable"
+                                        class="form-control" placeholder="Contoh: {{nama}} </br> <b>{{jawatan}}</b>"
+                                        rows="2"></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <select v-model="h.align" class="form-select">
+                                    <option value="left">Left</option>
+                                    <option value="center">Center</option>
+                                    <option value="right">Right</option>
                                 </select>
-                                <textarea v-if="h.variable === 'custom'" v-model="h.customVariable" class="form-control"
-                                    placeholder="Contoh: {{nama}} </br> <b>{{jawatan}}</b>" rows="2"></textarea>
-                            </div>
-                        </td>
-                        <td>
-                            <select v-model="h.align" class="form-select">
-                                <option value="left">Left</option>
-                                <option value="center">Center</option>
-                                <option value="right">Right</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="number" v-model.number="h.width" class="form-control" placeholder="%" min="5"
-                                max="100" />
-                        </td>
-                        <td class="text-center">
-                            <template v-if="i === 0">
-                                <span class="text-muted">-</span>
-                            </template>
-                            <template v-else>
-                                <button class="btn btn-sm btn-danger" style="width: 70px;"
-                                    @click="$emit('remove-header', i)">
-                                    Buang
-                                </button>
-                            </template>
-                        </td>
-                    </tr>
+                            </td>
+                            <td>
+                                <input type="number" v-model.number="h.width" class="form-control" placeholder="%"
+                                    min="5" max="100" />
+                            </td>
+                            <td class="text-center">
+                                <template v-if="i === 0">
+                                    <span class="text-muted">-</span>
+                                </template>
+                                <template v-else>
+                                    <button class="btn btn-sm btn-danger" style="width: 70px;"
+                                        @click="$emit('remove-header', i)">
+                                        Buang
+                                    </button>
+                                </template>
+                            </td>
+                        </tr>
+                    </template>
+                </draggable>
 
+                <tbody>
                     <!-- Add new header -->
                     <tr>
                         <td>#</td>
@@ -133,8 +143,10 @@
 
 <script>
 import Loader from "@/components/widgets/loader";
+import draggable from "vuedraggable";
+
 export default {
-    components: { Loader },
+    components: { Loader, draggable },
     name: "SenaraiBuilder",
     props: {
         jenisPelantikan: {
@@ -158,6 +170,16 @@ export default {
             selectedActions: [],
         };
     },
+    computed: {
+        draggedHeaders: {
+            get() {
+                return this.headers;
+            },
+            set(value) {
+                this.$emit('update:headers', value);
+            }
+        }
+    },
     watch: {
         jenisPelantikan: {
             immediate: true,
@@ -171,6 +193,7 @@ export default {
         if (!this.headers.length) {
             this.$emit("add-header", {
                 // label: "Index",
+                id: `header-${Date.now()}`,
                 variable: "index",
                 customVariable: "",
                 align: "center",
@@ -187,6 +210,7 @@ export default {
         emitAddHeader() {
             if (this.localHeader.label.trim() !== "") {
                 this.$emit("add-header", {
+                    id: `header-${Date.now()}`,
                     label: this.localHeader.label,
                     variable: this.localHeader.variable,
                     customVariable: this.localHeader.customVariable,
@@ -211,6 +235,9 @@ export default {
         handleBack() {
             this.$router.back();
         },
+        onDragChange() {
+            // Force re-evaluation or handle specific logic if needed
+        }
     },
 };
 </script>

@@ -53,7 +53,7 @@ export default {
       const result = [];
       const traverse = (nodes, level = 0, parentId = null) => {
         nodes.forEach((node) => {
-          if (!node.isTitle) {
+          if (!node.isTitle && !node.roles) {
             result.push({
               id: node.id,
               tab: this.$t ? this.$t(node.label) : node.label,

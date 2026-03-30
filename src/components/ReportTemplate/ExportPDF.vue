@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="text-center mt-1">
-                    <button type="button" @click="handleBack" class="btn btn-secondary me-2 btn-action">Kembali</button>
+                    <button v-if="showBack" type="button" @click="handleBack" class="btn btn-secondary me-2 btn-action">Kembali</button>
                     <!-- <button @click="$emit('export')" class="btn btn-primary me-2 btn-action">Muat Turun PDF</button> -->
                     <button @click="$emit('word')" class="btn btn-info me-2 btn-action">Muat Turun MS Word</button>
                     <button @click="$emit('print')" class="btn btn-primary me-2 btn-action">Cetak Laporan</button>
@@ -42,6 +42,10 @@ export default {
         selectedKategori: {
             type: String,
             default: '1'
+        },
+        showBack: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -84,5 +88,6 @@ export default {
 <style>
 .btn-action {
     width: 200px;
+    font-family: Arial, sans-serif;
 }
 </style>

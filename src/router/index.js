@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import { useAuthStore } from "@/state/pinia";
+import { menuItems } from "@/components/menu";
 import routes from "./routes";
 import appConfig from "../app.config.json";
 
@@ -63,6 +64,41 @@ router.beforeEach((routeTo, routeFrom, next) => {
       const user = JSON.parse(loggeduser);
       if (user && user.force_password_change === true && routeTo.path !== '/profile/kemaskini-kata-laluan') {
         return next('/profile/kemaskini-kata-laluan');
+      }
+
+      // Role & Permission checking
+      const role = (user.peranan || "guest").trim().toLowerCase();
+      const tabPermissions = JSON.parse(localStorage.getItem("tabPermissions")) || [];
+
+      // Find the menu item matching this route
+      const findMenuItem = (items, path) => {
+        for (const item of items) {
+          if (item.link === path) return item;
+          if (item.subItems) {
+            const found = findMenuItem(item.subItems, path);
+            if (found) return found;
+          }
+        }
+        return null;
+      };
+
+      const menuItem = findMenuItem(menuItems, routeTo.path);
+
+      if (menuItem) {
+        // 1. Check hardcoded roles in menu.js
+        if (menuItem.roles && !menuItem.roles.includes(role)) {
+          return next({ name: "Error-403" }); // Redirect to 403 if no role access
+        }
+
+        // 2. Check dynamic DB permissions (tabPermissions)
+        const perm = tabPermissions.find((p) => p.id === menuItem.id);
+        if (perm) {
+          const hasAccess = !!(perm[role.replace(" ", "")] || perm[role]);
+          if (!hasAccess) {
+            console.warn(`Access denied for ${role} on ${routeTo.path} (tabId: ${menuItem.id})`);
+            return next({ name: "Error-403" }); // Redirect to 403 if no permission access
+          }
+        }
       }
     }
 

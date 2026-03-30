@@ -83,20 +83,24 @@ export const menuItems = [
       {
         id: 15,
         label: "menuitems.penyelenggaraan-pengguna.text",
+        roles: ["pentadbir sistem"],
         subItems: [
           {
             id: 16,
             label: "menuitems.senarai-pengguna.text",
+            roles: ["pentadbir sistem"],
             link: "/pentadbir/penyelenggaraan-pengguna/senarai-pengguna",
           },
           {
             id: 17,
             label: "menuitems.daftar-pengguna.text",
+            roles: ["pentadbir sistem"],
             link: "/pentadbir/penyelenggaraan-pengguna/daftar-pengguna",
           },
           {
             id: 18,
             label: "menuitems.kemaskini-tab-pengguna.text",
+            roles: ["pentadbir sistem"],
             link: "/pentadbir/penyelenggaraan-pengguna/kemaskini-tab-pengguna",
           },
         ],
@@ -264,6 +268,12 @@ export const menuItems = [
         label: "menuitems.log-aduan.text",
         icon: "bx-wrench",
         link: "/pentadbir/aduan/log-aduan",
+      },
+      {
+        id: 42,
+        label: "menuitems.audit-log.text",
+        icon: "bx-wrench",
+        link: "/pentadbir/audit-log",
       },
 
     ]

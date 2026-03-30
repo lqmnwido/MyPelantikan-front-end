@@ -27,6 +27,7 @@
           <div class="col text-end fw-bold">
             <span v-if="!editing" @click="editing = true" style="cursor: pointer;">
               {{ editableLampiran }}
+              <i class="bx bx-pencil ms-1 text-muted" v-if="showGearButton" style="font-size: 0.8rem;"></i>
             </span>
             <input v-else v-model="editableLampiran" @blur="saveLampiran" @keydown.enter.prevent="saveLampiran"
               class="form-control form-control-sm d-inline w-auto" />
@@ -62,6 +63,7 @@
                 <div class="label" v-if="!editingJawatanLabel" @click="editingJawatanLabel = true"
                   style="cursor: pointer;">
                   {{ jawatanLabel }}
+                  <i class="bx bx-pencil ms-1 text-muted" v-if="showGearButton" style="font-size: 0.8rem;"></i>
                 </div>
 
                 <select v-else v-model="jawatanLabel" @blur="saveJawatanLabel" @change="saveJawatanLabel"
@@ -73,7 +75,14 @@
               <div class="colon">:</div>
               <div class="value">
                 <template v-if="jawatanLabel === 'Jawatan Terakhir'">
-                  {{ normalizedJawatan.join('\n') }}
+                  <div v-if="!editingCustomJawatan" @click="editingCustomJawatan = true" style="cursor: pointer;">
+                    <span style="white-space: pre-wrap;">{{ customJawatanTerakhir || normalizedJawatan.join('\n') }}</span>
+                    <i class="bx bx-pencil ms-1 text-muted" v-if="showGearButton" style="font-size: 0.8rem;"></i>
+                  </div>
+                  <div v-else>
+                    <textarea v-model="customJawatanTerakhir" class="form-control form-control-sm mb-1" rows="3"></textarea>
+                    <button class="btn btn-xs btn-primary py-0 px-2" @click="saveCustomJawatan">Simpan</button>
+                  </div>
                 </template>
                 <template v-else>
                   <template v-if="normalizedJawatan.length > 1">
@@ -129,6 +138,7 @@
               <!-- Clickable label -->
               <div v-if="!editingAnugerahLabel" @click="editingAnugerahLabel = true" style="cursor: pointer;">
                 Anugerah / Pingat
+                <i class="bx bx-pencil ms-1 text-muted" v-if="showGearButton" style="font-size: 0.8rem;"></i>
               </div>
 
               <!-- Dropdown for mode selection -->
@@ -240,6 +250,8 @@ export default {
       anugerahLabelMode: "Singkatan",
       editingAnugerahLabel: false,
       showGearButton: true,
+      editingCustomJawatan: false,
+      customJawatanTerakhir: "",
       personalFieldOptions: {
         gelaran: { label: "Gelaran" },
         nama: { label: "Nama" },
@@ -326,56 +338,90 @@ export default {
     },
   },
   created() {
-    // Initialize internalVisibleFields
-    let initialVisibleFields = {};
+    // 1. Initialize master list of visible fields from options (default to true)
+    let masterVisibleFields = {};
+    for (const key in this.personalFieldOptions) {
+      masterVisibleFields[key] = true;
+    }
+
+    // 2. Apply prop overrides if provided (e.g. from parent component)
     if (this.visibleFields) {
-      initialVisibleFields = { ...this.visibleFields };
-    } else {
-      for (const key in this.personalFieldOptions) {
-        initialVisibleFields[key] = true;
-      }
+      masterVisibleFields = { ...masterVisibleFields, ...this.visibleFields };
     }
 
-    const storedVisibleFields = localStorage.getItem(`visibleFields_${this.userId}`);
+    // 3. Load from localStorage to persist user choices
+    const storageKey = `resume_visibleFields_${this.userId}`;
+    const storedVisibleFields = localStorage.getItem(storageKey);
+    
     if (storedVisibleFields) {
-      this.internalVisibleFields = JSON.parse(storedVisibleFields);
+      try {
+        const parsed = JSON.parse(storedVisibleFields);
+        // Merge stored values with master to handle newly added fields in code
+        this.internalVisibleFields = { ...masterVisibleFields, ...parsed };
+      } catch (e) {
+        this.internalVisibleFields = masterVisibleFields;
+      }
     } else {
-      this.internalVisibleFields = initialVisibleFields;
+      this.internalVisibleFields = masterVisibleFields;
     }
 
-    // Load from localStorage if exists
-    const storedLampiran = localStorage.getItem(`lampiran_${this.userId}`);
-    const storedJawatan = localStorage.getItem(`jawatanLabel_${this.userId}`);
-    const storedAnugerahMode = localStorage.getItem(`anugerahMode_${this.userId}`);
+    // 4. Load other report settings from localStorage
+    const storedLampiran = localStorage.getItem(`resume_lampiran_${this.userId}`);
+    const storedJawatan = localStorage.getItem(`resume_jawatanLabel_${this.userId}`);
+    const storedAnugerahMode = localStorage.getItem(`resume_anugerahMode_${this.userId}`);
 
-    if (storedLampiran) this.editableLampiran = storedLampiran;
-    if (storedJawatan) this.jawatanLabel = storedJawatan;
-    else if (!this.resume.personal.jawatan || (Array.isArray(this.resume.personal.jawatan) && this.resume.personal.jawatan.length === 0) || (typeof this.resume.personal.jawatan === 'string' && this.resume.personal.jawatan.trim() === '')) {
+    if (storedLampiran) {
+      this.editableLampiran = storedLampiran;
+      this.$emit("update:lampiran", this.editableLampiran);
+    }
+    
+    if (storedJawatan) {
+      this.jawatanLabel = storedJawatan;
+    } else if (!this.resume.personal.jawatan || (Array.isArray(this.resume.personal.jawatan) && this.resume.personal.jawatan.length === 0) || (typeof this.resume.personal.jawatan === 'string' && this.resume.personal.jawatan.trim() === '')) {
       this.jawatanLabel = "Jawatan Terakhir";
     }
-    if (storedAnugerahMode) this.anugerahLabelMode = storedAnugerahMode;
+
+    if (storedAnugerahMode) {
+      this.anugerahLabelMode = storedAnugerahMode;
+    }
+
+    const storedCustomJawatan = localStorage.getItem(`resume_customJawatanTerakhir_${this.userId}`);
+    if (storedCustomJawatan) {
+      this.customJawatanTerakhir = storedCustomJawatan;
+    }
   },
   watch: {
     internalVisibleFields: {
       handler(newVal) {
-        localStorage.setItem(`visibleFields_${this.userId}`, JSON.stringify(newVal));
+        localStorage.setItem(`resume_visibleFields_${this.userId}`, JSON.stringify(newVal));
       },
       deep: true,
     },
   },
   methods: {
+    closeAllEditors() {
+      if (this.editing) this.saveLampiran();
+      if (this.editingJawatanLabel) this.saveJawatanLabel();
+      if (this.editingCustomJawatan) this.saveCustomJawatan();
+      if (this.editingAnugerahLabel) this.saveAnugerahMode();
+    },
+    saveCustomJawatan() {
+      this.editingCustomJawatan = false;
+      localStorage.setItem(`resume_customJawatanTerakhir_${this.userId}`, this.customJawatanTerakhir);
+    },
     saveLampiran() {
       this.editing = false;
       if (!this.editableLampiran.trim()) this.editableLampiran = "Lampiran -";
-      localStorage.setItem(`lampiran_${this.userId}`, this.editableLampiran);
+      localStorage.setItem(`resume_lampiran_${this.userId}`, this.editableLampiran);
       this.$emit("update:lampiran", this.editableLampiran);
     },
     saveJawatanLabel() {
       this.editingJawatanLabel = false;
       if (!this.jawatanLabel.trim()) this.jawatanLabel = "Jawatan Terkini";
-      localStorage.setItem(`jawatanLabel_${this.userId}`, this.jawatanLabel);
+      localStorage.setItem(`resume_jawatanLabel_${this.userId}`, this.jawatanLabel);
     },
     exportToWord() {
+      this.closeAllEditors();
       this.showGearButton = false;
       this.$nextTick(() => {
 
@@ -427,29 +473,6 @@ export default {
           const isSectionA = row.closest(".info-section") !== null;
           const borderStyle = isSectionA ? "border:none;" : "border:1px solid black;";
 
-          let extraLabel = "";
-          let extraColon = "";
-          let extraValue = "";
-
-          // ✅ Handle Jawatan Terkini with colon
-          if (label === "Nama" && this.normalizedJawatan.length > 0) {
-            const jawatanLabel = this.jawatanLabel;
-            const jawatanList = this.normalizedJawatan;
-
-            extraLabel = `<br>${jawatanLabel}`;
-            extraColon = `<br>:`; // colon for Jawatan row
-
-            if (jawatanList.length > 1) {
-              extraValue = `
-            <br>
-            <ol style="margin:4px 0 0 16px; padding:0;">
-              ${jawatanList.map(j => `<li>${j}</li>`).join("")}
-            </ol>`;
-            } else {
-              extraValue = `<br>${jawatanList[0]}`;
-            }
-          }
-
           const table = document.createElement("table");
           table.setAttribute("cellspacing", "0");
           table.setAttribute("cellpadding", "3");
@@ -458,18 +481,56 @@ export default {
           table.style.borderCollapse = "collapse";
           table.style.border = isSectionA ? "none" : "1px solid black";
 
-          table.innerHTML = `
-        <tr>
-          <td style="width:200px;vertical-align:top;padding:4px;${borderStyle}">
-            ${label}${extraLabel}
-          </td>
-          <td style="width:10px;vertical-align:top;padding:4px;${borderStyle}">
-            ${colon}${extraColon}
-          </td>
-          <td style="vertical-align:top;padding:4px;${borderStyle}">
-            ${value}${extraValue}
-          </td>
-        </tr>`;
+          let tableHtml = `
+            <tr>
+              <td style="width:200px;vertical-align:top;padding:4px;${borderStyle}">
+                ${label}
+              </td>
+              <td style="width:10px;vertical-align:top;padding:4px;${borderStyle}">
+                ${colon}
+              </td>
+              <td style="vertical-align:top;padding:4px;${borderStyle}">
+                ${value}
+              </td>
+            </tr>`;
+
+          // ✅ Handle Jawatan row (Terkini / Terakhir) as a SEPARATE row
+          if (label === "Nama" && this.internalVisibleFields.jawatan) {
+            const currentJawatanLabel = this.jawatanLabel;
+            let jawatanHtml = "";
+
+            if (currentJawatanLabel === "Jawatan Terakhir") {
+              const val = this.customJawatanTerakhir || this.normalizedJawatan.join('\n');
+              jawatanHtml = val.replace(/\n/g, '<br>');
+            } else {
+              const jawatanList = this.normalizedJawatan;
+              if (jawatanList.length > 1) {
+                // Use inside position and minimal margin to prevent over-indentation in Word
+                jawatanHtml = `<ol style="margin-top:0; margin-bottom:0; margin-left:0; padding-left:0; list-style-position: inside;">` +
+                  jawatanList.map(j => `<li style="margin-bottom:2px;">${j}</li>`).join("") +
+                  `</ol>`;
+              } else {
+                jawatanHtml = (jawatanList[0] || "").replace(/\n/g, '<br>');
+              }
+            }
+
+            if (jawatanHtml) {
+              tableHtml += `
+                <tr>
+                  <td style="width:200px;vertical-align:top;padding:4px;${borderStyle}">
+                    ${currentJawatanLabel}
+                  </td>
+                  <td style="width:10px;vertical-align:top;padding:4px;${borderStyle}">
+                    :
+                  </td>
+                  <td style="vertical-align:top;padding:4px;${borderStyle}">
+                    ${jawatanHtml}
+                  </td>
+                </tr>`;
+            }
+          }
+
+          table.innerHTML = tableHtml;
           row.replaceWith(table);
         });
 
@@ -524,6 +585,7 @@ export default {
       });
     },
     downloadPDF() {
+      this.closeAllEditors();
       this.showGearButton = false;
       this.$nextTick(() => {
         const element = this.$refs.pdfContent;
@@ -576,7 +638,7 @@ export default {
     saveAnugerahMode() {
       this.editingAnugerahLabel = false;
       if (!this.anugerahLabelMode.trim()) this.anugerahLabelMode = "Singkatan";
-      localStorage.setItem(`anugerahMode_${this.userId}`, this.anugerahLabelMode);
+      localStorage.setItem(`resume_anugerahMode_${this.userId}`, this.anugerahLabelMode);
     },
 
   },

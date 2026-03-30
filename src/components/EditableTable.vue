@@ -148,11 +148,12 @@ export default {
             handler(newData) {
                 const $table = $(this.$refs.editableDataTable);
                 let currentPage = 0; // Default to first page
+                let currentSearch = ''; // Default search
 
                 if ($.fn.DataTable.isDataTable($table)) {
                     const dt = $table.DataTable();
-                    const pageInfo = dt.page.info();
-                    currentPage = pageInfo.page;
+                    currentPage = dt.page.info().page;
+                    currentSearch = dt.search();
                     dt.destroy();
                 }
 
@@ -160,7 +161,10 @@ export default {
 
                 this.$nextTick(() => {
                     if (this.localData.length) {
-                        this.initDataTable({ startingPage: currentPage });
+                        this.initDataTable({ 
+                            startingPage: currentPage,
+                            searchVal: currentSearch 
+                        });
                     }
                 });
             },
@@ -209,12 +213,6 @@ export default {
                 id = row.id;
             }
 
-            // Destroy DataTable before removing row
-            const $table = $(this.$refs.editableDataTable);
-            if ($.fn.DataTable.isDataTable($table)) {
-                $table.DataTable().destroy();
-            }
-
             this.$emit("delete-row", { id, index: rowIndex });
         },
         startEdit(index) {
@@ -224,13 +222,16 @@ export default {
             const $table = $(this.$refs.editableDataTable);
             if ($.fn.DataTable.isDataTable($table)) {
                 const dt = $table.DataTable();
-                const pageInfo = dt.page.info();
-                const currentPage = pageInfo.page;
+                const currentPage = dt.page.info().page;
+                const currentSearch = dt.search();
 
                 dt.destroy();
 
                 this.$nextTick(() => {
-                    this.initDataTable({ startingPage: currentPage });
+                    this.initDataTable({ 
+                        startingPage: currentPage,
+                        searchVal: currentSearch
+                    });
                 });
             }
         },
@@ -279,6 +280,9 @@ export default {
                 })),
                 lengthChange: true,
                 searching: true,
+                search: {
+                    search: options.searchVal || ''
+                },
                 lengthMenu: [5, 10, 25, 50, 100],
                 pageLength: pageLength,
                 displayStart: (options.startingPage || 0) * pageLength,

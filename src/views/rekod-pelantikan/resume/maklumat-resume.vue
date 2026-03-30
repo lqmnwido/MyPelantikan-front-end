@@ -246,6 +246,7 @@ export default {
 
 .btn {
   width: 200px;
+  font-family: Arial, sans-serif;
 }
 
 .loading-overlay {

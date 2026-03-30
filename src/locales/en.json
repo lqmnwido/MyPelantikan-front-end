@@ -566,17 +566,10 @@
       }
     },
     "log-aduan": {
-      "text": "Log Aduan",
-      "list": {
-        "default": "Default",
-        "saas": "Saas",
-        "crypto": "Crypto",
-        "blog": "Blog",
-        "jobs": {
-          "text": "Jobs",
-          "badge": "New"
-        }
-      }
+      "text": "Log Aduan"
+    },
+    "audit-log": {
+      "text": "Log Audit"
     },
     "kategori-pelantikan": {
       "text": "Kategori Pelantikan",
