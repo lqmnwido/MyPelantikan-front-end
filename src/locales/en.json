@@ -266,6 +266,19 @@
         }
       }
     },
+        "tutorial-list": {
+      "text": "Tutorial List",
+      "list": {
+        "default": "Default",
+        "saas": "Saas",
+        "crypto": "Crypto",
+        "blog": "Blog",
+        "jobs": {
+          "text": "Jobs",
+          "badge": "New"
+        }
+      }
+    },
     "carian-tamat-tempoh": {
       "text": "Carian Tamat Tempoh",
       "list": {

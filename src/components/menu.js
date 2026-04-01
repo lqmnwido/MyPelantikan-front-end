@@ -59,6 +59,12 @@ export const menuItems = [
     link: "/carian/carian-lanjutan",
   },
   {
+    id: 100,
+    label: "menuitems.tutorial-list.text",
+    icon: "bx-book-open",
+    link: "/tutorial",
+  },
+  {
     id: 11,
     label: "menuitems.dasar-lantikan.text",
     icon: "bx-book",

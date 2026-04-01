@@ -383,6 +383,14 @@ export default [
     component: () => import("../views/pentadbir/template-laporan/template-laporan"),
   },
 
+  // Tutorial list
+  {
+    path: "/tutorial",
+    name: "tutorial-list",
+    meta: { title: "Tutorial List", authRequired: true },
+    component: () => import("../views/tutorial/index.vue"),
+  },
+
   // Laporan Render 
   {
     path: "/pentadbir/laporan",
