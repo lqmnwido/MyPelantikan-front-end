@@ -27,34 +27,36 @@
     <BModal v-model="showDetailsModal" title="Butiran Log Audit" hide-footer size="lg" centered>
       <div v-if="selectedLog">
         <table class="table table-bordered">
-          <tr>
-            <th width="30%">Pengguna</th>
-            <td>{{ selectedLog.user?.nama || 'Sistem/Tetamu' }}</td>
-          </tr>
-          <tr>
-            <th>Peristiwa</th>
-            <td>{{ selectedLog.peristiwa }}</td>
-          </tr>
-          <tr>
-            <th>URL</th>
-            <td>{{ selectedLog.url }}</td>
-          </tr>
-          <tr>
-            <th>Tarikh & Masa</th>
-            <td>{{ selectedLog.tarikh }} ({{ selectedLog.masa_lalu }})</td>
-          </tr>
-          <tr v-if="selectedLog.maklumat_lama">
-            <th>Maklumat Lama</th>
-            <td>
-              <pre class="bg-light p-2">{{ formatJSON(selectedLog.maklumat_lama) }}</pre>
-            </td>
-          </tr>
-          <tr v-if="selectedLog.maklumat_baru">
-            <th>Maklumat Baru</th>
-            <td>
-              <pre class="bg-light p-2">{{ formatJSON(selectedLog.maklumat_baru) }}</pre>
-            </td>
-          </tr>
+         <tbody>
+            <tr>
+              <th width="30%">Pengguna</th>
+              <td>{{ selectedLog.user?.nama || 'Sistem/Tetamu' }}</td>
+            </tr>
+            <tr>
+              <th>Peristiwa</th>
+              <td>{{ selectedLog.peristiwa }}</td>
+            </tr>
+            <tr>
+              <th>URL</th>
+              <td>{{ selectedLog.url }}</td>
+            </tr>
+            <tr>
+              <th>Tarikh & Masa</th>
+              <td>{{ selectedLog.tarikh }} ({{ selectedLog.masa_lalu }})</td>
+            </tr>
+            <tr v-if="selectedLog.maklumat_lama">
+              <th>Maklumat Lama</th>
+              <td>
+                <pre class="bg-light p-2">{{ formatJSON(selectedLog.maklumat_lama) }}</pre>
+              </td>
+            </tr>
+            <tr v-if="selectedLog.maklumat_baru">
+              <th>Maklumat Baru</th>
+              <td>
+                <pre class="bg-light p-2">{{ formatJSON(selectedLog.maklumat_baru) }}</pre>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div class="text-end">
